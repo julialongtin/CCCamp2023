@@ -174,7 +174,7 @@ HSlice Project \\ % Your institution for the title page
   \end{itemize}
   \note{I am from a very disadvantaged part of the united states, so have seen a lot of suffering which partially drives my work}
   \note{CyberPunk enthusiast is a polite way of saying I watch too much ghost in the shell, and spend too much time imagining how more technology could help both myself, and the people I care about.}
-  \note{have some experience setting out to accomplish something really hard in the 3d printing world, which is what gave me the confidence to begin this project.}
+  \note{which is what gave me the confidence to begin this project, and estimate it at 6 months.}
 \end{frame}
 
 %------------------------------------------------
@@ -184,11 +184,11 @@ HSlice Project \\ % Your institution for the title page
 %------------------------------------------------
 \begin{frame}
   \frametitle{Why am I here?}
-    I'm making a slicer!
+    I'm making a new kind of slicer, for 3D printing!
   \begin{itemize}
   \item Hope:
     \begin{itemize}
-    \item Hoping improving slicer technology can help people in the real world.
+    \item Hoping improving slicer technology can help non-hackers.
     \end{itemize}
   \item Inspiration:
     \begin{itemize}
@@ -204,7 +204,7 @@ HSlice Project \\ % Your institution for the title page
   \note{increased precision and increased speed is critical as we try to tackle more detailed prints made of more materials.}
 \end{frame}
 
-\subsection{Where I Began}
+\section{Where I Began}
 
 \begin{frame}
   \frametitle{Where I Began}
@@ -218,12 +218,12 @@ HSlice Project \\ % Your institution for the title page
   \item Open up a text editor, and describe my object.
   \item Hand it to my 3d modelling system.
   \item Wait.
-  \item Receive an STL file. Open it in a visualizer, go back to step 1 if it's wrong.
+  \item Receive an STL file. Open it in a visualizer, go back to step 1 if its wrong.
   \item Open up a slicer, and hand it my STL file.
   \item Pick the material I want to use, and the quality level I want in the print.
   \item Wait.
   \item Receive a GCode file.
-  \item Stick this file on a memory stick, and plug it into my printer.
+  \item Stick this file on a memory stick, and plug it into my printer. hit 'Print'.
   \item Wait.
   \item Receive a thing.
   \end{itemize}
@@ -252,7 +252,7 @@ HSlice Project \\ % Your institution for the title page
 \begin{frame}
   \frametitle{What does ImplicitCAD do?}
   \begin{itemize}
-  \item Reads and executes a program that uses Constructive Solid Geometry to describe objects.
+  \item Reads and executes a program that contains the description of objects.
   \item Renders 3D objects to files: STL, OBJ... ``Triangles on the outside''.
     \begin{itemize}
     \item Uses marching cubes algorithm for generating these triangles.
@@ -264,18 +264,7 @@ HSlice Project \\ % Your institution for the title page
     \item https://www.implicitcad.org/examples
     \end{itemize}
   \end{block}
-  \note{constructive solid geometry is a system of building up a complicated object from simpler parts. think: i need a plate, i need to subtract holes from it. i need to round the corners.. if you've used openscad, it's a subset of that language}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Current Slicers}
-  \begin{itemize}
-  \item Accept files containing 3D geometry: STL, OBJ... ``Triangles on the outside''.
-  \item Output a simple file containing instructions for creating an object, for use by a 3D printer.
-  \item Commonly use an external geometry engine (EG: openCASCADE).
-  \end{itemize}
-  Note: We're discussing FDM printing during this talk, but many other methods exist, each with their own plusses and minuses.
-  \note{FDM is fused deposition of material... think, ``a hot glue gun on a robot''.}
+  \note{If you've used openscad, implicitcad's language is a subset of that language}
 \end{frame}
 
 \begin{frame}
@@ -286,15 +275,17 @@ HSlice Project \\ % Your institution for the title page
   \begin{itemize}
   \item Reads a file containing one or more objects.
     \begin {itemize}
-    \item Objects are given as a series of triangles on the exterior of where the object begins.
+    \item Objects are given as a set of triangles on the exterior of where the object begins.
     \end{itemize}
   \item Divides objects into layers.
-  \item Writes instructions to fill in those layers. Different layer heights give different quality.
-  \item Writes instructions to manage the non-geometry parts of 3D printing(temperature, speeds of movement, fan control..).
+  \item Computes instructions to fill in those layers. Different layer heights give different quality of print.
+  \item Computes instructions to manage the non-geometry parts of 3D printing(temperature, speeds of movement, fan control..).
   \item Writes a GCode file contaiting these instructions, which can be given to a printer to produce the object(s) from the file.
   \end{itemize}
+  Note: We're discussing FDM(Fused Deposition of Material) printing during this talk, but many other methods exist, each with their own plusses and minuses.
   \note{a pyramid could be represented as four triangles for what you see above the surface, and two in the base, making a square.}
   \note{GCode is basically instructions for ``go from point A to point B at speed X while extruding material at Y volume per second''}
+  \note{FDM... think, ``a hot glue gun on a robot''.}
 \end{frame}
 
 \section{Why do we need better slicers?}
@@ -304,9 +295,9 @@ HSlice Project \\ % Your institution for the title page
   \begin{itemize}
   \item Performance and Scalability(number of CPUs):
     \begin{itemize}
-    \item Many slicers use geometry engines and algorithms that are single threaded..
+    \item Slicers commonly use external geometry engines and algorithms that are single threaded..
     \item .. and are written in imperative languages.
-    \item .. which hinders GPU, FPGA, or other accelerator usage.
+    \item .. which hinders using a GPU, FPGA, or other type of accelerator.
     \end{itemize}
   \item Precision:
     \begin{itemize}
@@ -315,26 +306,22 @@ HSlice Project \\ % Your institution for the title page
     \end{itemize}
   \item Scalability of printing:
     \begin{itemize}
-    \item Models are getting more and more complex. we are learning to slice aross planes, to print with more materials at once, and are producing smaller objects (bioprinting, anyone?).
+    \item Models are getting more and more complex. We are learning to slice aross planes, to print with more materials at once, and are producing smaller objects (bioprinting, anyone?).
     \end{itemize}
   \end{itemize}
+  \note{If you're wondering what imperative programming is, if you're giving your computer a sequence of instructions, that's imperative. if you're giving it a list of formulas, that's functional programming.}
 \end{frame}
 
 \section{Inspiration}
 \begin{frame}
   \frametitle{Inspiration: Non-Planar Printing}
+  Non-Planar printing is printing on a surface that is not parallel to the ground at all times.
   \begin{block}{University of Hamburg / Department of Informatics}
     \begin{itemize}
     \item https://youtu.be/km1lvuva5mI
     \end{itemize}
   \end{block}
-  \note{https://youtu.be/km1lvuva5mI?t=100}
-  \note{
-    from talking about functionality to one implementation? two hard transitions.
-    defining the geometry engine more explicitly. define what i'm talking about more upfront. makes explicit transitions better. re-examine the promise of exactly what's missing in the description. we're going to go deep into <x> algorithm, and explain how it works.
-    insets broken in everything else. i can do better.
-  }
-  \note{I don't care if my slicer is the one we get to the destination with, i'm just trying to get us closer.}
+  \note{normally, we stack layers onto a 3D print like we were stacking strangely shaped pancakes. non-planar slicing breaks this pattern.}
 \end{frame}
 
 \section{First Decisions}
@@ -402,6 +389,7 @@ HSlice Project \\ % Your institution for the title page
   \begin{itemize}
   \item ``Geometric Algebra is like Functional programming for linear algebra. Mindblowing.'' - @henrmota
   \end{itemize}
+  \note{The authors of this work don't deliniate well between Projective Geometric Algebra, and Geometric algebra. in fact they seem to be coming up with some other term now, so the language around this is more confusing than the math. we're using PGA to describe the primitives and functions on those primitives, and GA for the operators.}
   \note{We are using a clifford algebra of (2,0,1)*}
 \end{frame}
 
@@ -413,7 +401,7 @@ HSlice Project \\ % Your institution for the title page
   \end{itemize}
 \end{frame}
 
-\section{How I Got Here}
+\section{How I got here}
 
 \begin{frame}
   \frametitle{Beginning Work}
@@ -438,7 +426,7 @@ HSlice Project \\ % Your institution for the title page
     \end{itemize}
   \end{itemize}
   \note{the first mistake I think most developers make is assuming no-one has tried what you're trying to do.}
-  \note{our definition of convex: If you put a baloon around it, the baloon would touch all of the line segments.}
+  \note{our definition of convex: If you put a baloon around it, the baloon would touch all of the points where two line segments meet.}
 \end{frame}
 
 \begin{frame}
@@ -450,7 +438,7 @@ HSlice Project \\ % Your institution for the title page
   \frametitle{Experience of only using Haskell}
   As I have maintained ImplicitCAD for many years, Haskell generally got ``out of my way'', with the following exceptions:
   \begin{itemize}
-  \item Floating point rounding control is a separate library, which seems un-loved, and does not work on GHC 9.2 yet.
+  \item Floating point rounding control is a separate library, which seems un-loved, and does not work on newer versions of the haskell compiler yet.
   \item There is always a better way to learn to do things in Haskell, which led to me having many moments of ``who wrote this crap?'' as I re-factored over the years.
   \item The compiler and type system worked closely with me, when refactoring! :)
   \item When implementing a function where I didn't know how to handle all of the possible cases, I could set up a filter, and call error() in the cases I don't know how to implement yet.
@@ -461,7 +449,7 @@ HSlice Project \\ % Your institution for the title page
   \frametitle{Experience of adding Geometric Algebra}
   We needed a Geometric Algebra library, to do the math for Projective Geometric Algebra functions.\par
   A Geometric Algebra is a system of algebra operating on values in vector spaces. \par
-  Think: Number plus axis, where we have a lot of axises, and combinations of axises.
+  Think: Number plus axis, where we have a lot of axes, and combinations of axes.
   \begin{itemize}
   \item The papers I was using did not define in detail the operators they were using, which slowed development. The word 'multiply' had a lot of meanings.
     \begin{itemize}
@@ -516,7 +504,7 @@ HSlice Project \\ % Your institution for the title page
 
 \begin{frame}
   \frametitle{Experience of adding new geometry algorithms}
-  Longer, and painfuller. Had to learn about a part of math I hadn't even heard of before: Straight Skeleton Generation.\par
+  Longer, and painfuller. Had to learn about a part of computational geometry I hadn't even heard of before: Straight Skeleton Generation.\par
   Implementation is incomplete. Just starting to slice complicated shapes, no hole handling yet.
   \begin{itemize}
   \item Straight Skeletons are deceptively simple. I estimated difficulty without even understanding this part.
@@ -529,10 +517,11 @@ HSlice Project \\ % Your institution for the title page
 
 \begin{frame}
   \frametitle{Resources to prevent the same mistakes}
-    \begin{block}{Christopher Tscherne - Straight Skeletons \& Motorcycle Graphs}
-      https://diglib.tugraz.at/download.php?id=5c4a4913a9ed9\&location
-    \end{block}
-    This Talk? :)
+  \begin{block}{Christopher Tscherne - Straight Skeletons \& Motorcycle Graphs}
+    https://diglib.tugraz.at/download.php?id=5c4a4913a9ed9\&location
+  \end{block}
+  This Talk? :)
+  \note{When I went looking for other slicers implementing these functions, i found a majority of attempts to write slicers died at this step. Reach out if you have trouble.}
 \end{frame}
 
 \begin{frame}
@@ -567,12 +556,21 @@ HSlice Project \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
+  \frametitle{Results}
+  The results of this work break down into three categories:
+  \begin{itemize}
+  \item Slicing parallelism improvements
+  \item Floating point error tracking
+  \item Property testing geometry
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Visualizing Geometry}
   For drawing the figures for the rest of the talk, we're going to use:
   \begin{block}{Ganja.JS}
     https://enkimute.github.io/ganja.js/
   \end{block}
-  \note{weaknesses of ganja.js: always focuses on the origin, no ray primitive, labels for two points at the same point overwrite each other.}
 \end{frame}
 
 \subsection{Adding Slicing Primitives}
@@ -581,6 +579,7 @@ HSlice Project \\ % Your institution for the title page
   \frametitle{Rendering a Triangle}
     \includegraphics[width=0.9\textwidth, center]{triangle\-Straight_Skeleton.png}
   \note{Point out the exterior nodes, and the interior node.}
+  \note{weaknesses of ganja.js: always focuses on the origin, no ray primitive, labels for two points at the same point overwrite each other.}
 \end{frame}
 
 \begin{frame}
@@ -600,7 +599,7 @@ HSlice Project \\ % Your institution for the title page
     \item inset: to draw a smaller form of the contour where each line segment is a given distance from its companion in the original contour.
     \end{itemize}
   \end{itemize}
-  \note{weaknesses of ganja.js: always focuses on the center, no ray primitive, labels at the same point collide.}
+  \note{insetting and outsetting are critically required when you're trying to print the edge of an object. if you use a sharpie, and draw a square according to instructions, you have actually drawn too big of a square. you need to inset by half of the width of the marker you're using. something similar is required when 3d printing, so you don't produce over-sized objects.}
 \end{frame}
 
 \begin{frame}
@@ -661,11 +660,11 @@ HSlice Project \\ % Your institution for the title page
   \item Determine the collision that has the shortest distance from its input nodes.
   \item Remove the input nodes from your list to be searched, and replace it with an interior node.
     \begin{itemize}
-    \item for two input nodes output of this new interior node will be anticollinear with the bisector of the input nodes.
+    \item For two input nodes output of this new interior node will be anticollinear with the bisector of the input nodes.
     \end{itemize}
   \item Wash, Rinse, Repeat.
   \end{itemize}
-    \note{repeat: our definition of convex: If you put a baloon around it, the baloon would touch all of the line segments.}
+    \note{repeat: our definition of convex: If you put a baloon around it, the baloon would touch all of the points of the contour.}
     \note{go back to the last slide, and solve it in-front of everyone}
 \end{frame}
 
@@ -688,13 +687,13 @@ HSlice Project \\ % Your institution for the title page
   \begin{itemize}
   \item Emitted from at the point two line segments intersect forming a convex angle from the perspective of the inside of the contour.
   \item Can collide with an exterior line, an exterior node, or another motorcycle.
-  \item for a motorcycle that does not hit another motorcycle, the point the straight skeleton passes through the motorcycle, and the lines the skeleton must enter/exit are calculable.
+  \item For a motorcycle that hits the other side un-obstructed, the point the straight skeleton passes through the motorcycle, and the lines the skeleton must enter/exit are calculable.
   \item Interesting Attributes:
     \begin {itemize}
       \item Has a speed (speeding motorcycles!).
     \end{itemize}
   \end{itemize}
-  \note{speeding motorcycles are impossible to search for.}
+  \note{Speeding motorcycles are impossible to search for on google.}
 \end{frame}
 
 \begin{frame}
@@ -703,7 +702,7 @@ HSlice Project \\ % Your institution for the title page
   \item Motorcycle Speed: The distance along the motorcycle between the point the motorcycle is emitted, and where it would intersect with a line that is parallel to, and one unit away from one of the motorcycle's input lines segments.
   \item Wall Collision Speed: The distance along the motorcycle between the point the motorcycle hits the wall, and where it would intersect with a line that is parallel to, and one unit away from the wall.
   \end{itemize}
-  \note{So, in the case of being emitted from a 90 degree angle, we use asquared + bsquared = csquared, which gives us a speed of 1.41.}
+  \note{So, in the case of being emitted from a 90 degree angle, giving us a 45 degree angle between where the motorcycle leaves a line segment, and where it hits a parallel line segment. that lets us use asquared + bsquared = csquared, which gives us a speed of 1.41.}
 \end{frame}
 
 \begin{frame}
@@ -723,9 +722,9 @@ HSlice Project \\ % Your institution for the title page
   Example:
     \begin{itemize}
     \item For the last shown object, the motorcycle is emitted from a 90 degree angle.
-    \item a line parallel to one of it's input line segments and 1 unit away would cross the motorcycle sqrt(2), or ~1.41 units away, giving it a speed of ~1.41.
-    \item a the wall intersected is at a 90 degree angle to the motorcycle, so would have a speed of 1.
-    \item so the distance between the motorcycle base and the point is 1.41 times the distance between the point and where the motorcycle intersects the target line.
+    \item A line parallel to one of it's input line segments and 1 unit away would cross the motorcycle sqrt(2), or ~1.41 units away, giving it a speed of ~1.41.
+    \item A the wall intersected is at a 90 degree angle to the motorcycle, so would have a speed of 1.
+    \item So the distance between the motorcycle base and the point is 1.41 times the distance between the point and where the motorcycle intersects the target line.
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -747,10 +746,18 @@ HSlice Project \\ % Your institution for the title page
   Example:
     \begin{itemize}
     \item For the last shown object, the motorcycle is emitted from a 90 degree angle.
-    \item a line parallel to one of it's input line segments and 1 unit away would cross the motorcycle sqrt(2), or ~1.41 units away, giving it a speed of ~1.41.
-    \item a the wall intersected is at a 90 degree angle to the motorcycle, so would have a speed of 1.
-    \item so the distance between the motorcycle base and the new line is 1.41 times the distance between the new line and where the motorcycle intersects the target line.
+    \item A line parallel to one of it's input line segments and 1 unit away would cross the motorcycle sqrt(2), or ~1.41 units away, giving it a speed of ~1.41.
+    \item A the wall intersected is at a 90 degree angle to the motorcycle, so would have a speed of 1.
+    \item So the distance between the motorcycle base and the new line is 1.41 times the distance between the new line and where the motorcycle intersects the target line.
     \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Slicing Primitives: Cells}
+  \begin{itemize}
+  \item Have a non-zero number of sides, composed of multiple connected line segments.
+  \item Are separated from other cells by motorcycles.
   \end{itemize}
 \end{frame}
 
@@ -759,8 +766,8 @@ HSlice Project \\ % Your institution for the title page
   \begin{itemize}
   \item Because the crossover point and lines can be calculated directly from just the input segments of the motorcycle, and the object collided with:
     \begin {itemize}
-    \item we can calculate the straight skeletons of the two sides separately, giving us multiple cells. Parallelism, and reduced work on both sides!
-    \item when calculating using cells, error in calculation is not propogated across the divide.
+    \item We can calculate the straight skeletons of the two sides separately, giving us multiple cells. Parallelism, and reduced work on both sides!
+    \item When calculating using cells, error in calculation is not propogated across the divide.
     \end {itemize}
   \item Because PGA has operations for both finding a point at a ratio between two points, and for finding a line at a ratio between two other lines, The crossover finding functions are easy to implement.
   \item Crossover calculations do not work if one of the interior nodes of the skeleton of one side crosses over to the other side. for this situation, see Christopher Tscherne's paper referenced earlier.
@@ -768,14 +775,6 @@ HSlice Project \\ % Your institution for the title page
 \end{frame}
 
 \subsection{Adding Projective Geometric Algebra}
-
-\begin{frame}
-  \frametitle{Slicing Primitives: Cells}
-  \begin{itemize}
-  \item Have a non-zero number of sides, composed of multiple connected line segments.
-  \item are separated from other cells by motorcycles.
-  \end{itemize}
-\end{frame}
 
 \begin{frame}
   \frametitle{Projective Geometric Algebra}
@@ -793,9 +792,9 @@ HSlice Project \\ % Your institution for the title page
     \end{itemize}
   \item Interesting Operations:
     \begin {itemize}
-    \item add two points: get a point in-between them
-    \item multiply both points by values a,b, then add them: get a point a/b between the two points
-    \item multiply two points: get a line between them, and the distance between the points
+    \item Add two points: get a point in-between them
+    \item Multiply both points by values a,b, then add them: get a point a/b between the two points
+    \item Multiply two points: get a line between them, and the distance between the points
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -811,11 +810,11 @@ HSlice Project \\ % Your institution for the title page
     \end{itemize}
   \item Interesting Operations:
     \begin {itemize}
-    \item add two lines: get the line in-between them
-    \item multiply both lines by values a,b, then add them: get a line a/b between the two lines
-    \item no e1? parallel to the X axis.
-    \item no e2? parallel to the Y axis.
-    \item use the translationISH and an interceptISH to get a real intercept.
+    \item Add two lines: get the line in-between them
+    \item Multiply both lines by values a,b, then add them: get a line a/b between the two lines
+    \item No e1? Parallel to the X axis.
+    \item Ro e2? Parallel to the Y axis.
+    \item Use the translationISH and an interceptISH to get a real intercept.
     \end{itemize}
   \item Interesting Properties:
     \begin {itemize}
@@ -847,9 +846,10 @@ HSlice Project \\ % Your institution for the title page
     \end{itemize}
   \item Unit of Least Precision:
     \begin {itemize}
-    \item the least significant bit of a value.
+    \item The least significant bit of a value.
     \end{itemize}
   \end{itemize}
+  \note {Define a ULP here}
 \end{frame}
 
 \begin{frame}
@@ -859,8 +859,8 @@ HSlice Project \\ % Your institution for the title page
     \begin {itemize}
       \item Get the closest answer to the 'real' answer.
       \item Get the closest answer above the 'real' answer.
-      \item store the closest answer to the 'real' answer.
-      \item store the unit of least precision of the closest answer above the 'real' answer.
+      \item Store the closest answer to the 'real' answer.
+      \item Store the unit of least precision of the closest answer above the 'real' answer.
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -884,7 +884,6 @@ HSlice Project \\ % Your institution for the title page
     \item When in doubt, add a fudge multiplier, and think through your operations!
     \end{itemize}
   \end{itemize}
-  \note { define a ULP here}
 \end{frame}
 
 \begin{frame}
@@ -894,7 +893,7 @@ HSlice Project \\ % Your institution for the title page
     \begin{itemize}
     \item Haskell is a lazy language.
     \item ULPs allow you to find error bars, including error amounts that might be undesireable.
-    \item Solution? tell the compiler to the calculation in a fixed point library, and de-reference it when error is too high!
+    \item Solution? If the error value is too large, do the calculation in a fixed point library!
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -912,10 +911,9 @@ HSlice Project \\ % Your institution for the title page
   \par Examples:
   \normalsize
   \begin{itemize}
-    \item unit test: 2 `add` 2 == 4
-    \item property test: a `add` b \textgreater a \par where a,b :: (Positive Integer)
-    \item property test: a `add` b \textgreater b \par where a,b :: (Positive Integer)
-    \item property test: a `add` b \textless b*2 \par where a,b :: (Positive Integer) and a \textless b
+    \item The sum of the three angles of any triangle is 180.
+    \item All squares have four sides.
+    \item All regular polygons have no motorcycles.
   \end{itemize}
 \end{frame}
 
@@ -927,10 +925,10 @@ HSlice Project \\ % Your institution for the title page
   \item Call that function from your property test, and test properties!
   \item Think:
     \begin{itemize}
-    \item the point of the interior node of a triangle is always inside the triangle..
-    \item a square always has one interior node.
-    \item a rectangle always has two interior nodes.
-    \item an inset unit polygon retains the number of exterior nodes as it shrinks.
+    \item The point of the interior node of a triangle is always inside the triangle..
+    \item A square always has one interior node.
+    \item A rectangle always has two interior nodes.
+    \item An inset unit polygon retains the number of exterior nodes as it shrinks.
     \end{itemize}
   \end{itemize}
   \begin{block}{Idea Stolen From:}
@@ -939,9 +937,22 @@ HSlice Project \\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
+  \frametitle{Review}
+  To summarize:
+  \begin{itemize}
+  \item In order for 3d printing to help more people, we need to focus on slicers.
+  \item More parallel algorithms for slicing are possible.
+  \item Projective Geometric Algebra can be used with less precision loss than linear algebra.
+  \item Property testing is necessary, to keep all of this math working as you develop it.
+  \item I want you to write a slicer in less than the 3 years this has taken me.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{-Fin-}
 \Huge{\centerline{Questions?}}
-\large{email: julia.longtin@gmail.com}
+\large{\centerline{email: julia.longtin@gmail.com}}
+\note{I don't care if my slicer is the one we get to the destination with, i'm just trying to get us closer.}
 \end{frame}
 
 %\subsection {tscherne's algorithm}
